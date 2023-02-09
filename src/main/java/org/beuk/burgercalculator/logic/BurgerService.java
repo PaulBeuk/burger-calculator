@@ -11,10 +11,22 @@ import java.text.NumberFormat;
 
 @Service
 @Slf4j
-@RequiredArgsConstructor
 public class BurgerService {
 
+	private ShopService shopService;
+
+	public BurgerService(ShopService shopService) {
+		this.shopService = shopService;
+	}
+
+	public BurgerService() {
+		this.shopService = new ShopService();
+	}
+
 	public String createBurger(String type) {
+		if(!shopService.isShopOpen()) {
+			return "out of order";
+		}
 		Burger b = null;
 		type = type.toUpperCase();
 		switch (type) {
